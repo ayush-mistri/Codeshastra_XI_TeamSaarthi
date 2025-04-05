@@ -17,6 +17,13 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", formData);
+      
+      const { token, user } = res.data;
+  
+      // Save to localStorage (you can also use sessionStorage)
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user)); // optional, if you send user data
+      
       toast.success("Login Successful!", {
         position: "top-right",
         autoClose: 3000,
@@ -30,13 +37,14 @@ const Login = () => {
           fontWeight: "bold",
         },
       });
-      
+  
       setTimeout(() => navigate("/Dashboard"), 1500);
     } catch (err) {
       const msg = err.response?.data?.message || "Login failed";
       setError(msg);
     }
   };
+  
 
   const handleGoogleSignIn = () => {
     console.log("Google Sign-In clicked");
