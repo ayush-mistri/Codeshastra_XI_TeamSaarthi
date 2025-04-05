@@ -100,7 +100,7 @@ export default function Dashboard() {
           >
             <FaBars size={20} />
           </button>
-          <h1 className="text-2xl font-bold text-blue-600 hidden lg:block">Dashboard</h1>
+          <h1 className="text-2xl font-bold text-blue-600 hidden lg:block">Auralytics</h1>
         </div>
         <button
           onClick={handleLogout}

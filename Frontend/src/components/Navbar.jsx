@@ -23,7 +23,7 @@ const Navbar = () => {
       <nav className="bg-white/60 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-blue-600">
-            <Link to="/">Team Saarthi</Link>
+            <Link to="/">Auralytics</Link>
           </h1>
 
           {/* Desktop Links */}

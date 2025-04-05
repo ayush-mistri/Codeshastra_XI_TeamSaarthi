@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -30,8 +32,8 @@ const Signup = () => {
         pauseOnHover: true,
         draggable: true,
         style: {
-          backgroundColor: "#3B82F6",
-          color: "#ffffff",
+          backgroundColor: "#ffffff",
+          color: "#3B82F6",
           fontWeight: "bold",
         },
       });
@@ -43,7 +45,7 @@ const Signup = () => {
   };
 
   const handleGoogleSignIn = () => {
-    console.log("Google Sign-Up clicked");
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/auth/google`;
   };
 
   return (
@@ -72,7 +74,7 @@ const Signup = () => {
       <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 grid grid-cols-1 md:grid-cols-2">
         {/* Left Side */}
         <div className="hidden md:flex flex-col justify-center items-center bg-gradient-to-br from-blue-800 via-blue-600 to-blue-400 text-white p-8 md:p-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Join Team Saarthi 🚀</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Join Auralytics 🚀</h2>
           <p className="text-base md:text-lg text-center max-w-md">
             Create your account to start contributing to smarter, safer roads with Team Saarthi.
           </p>
@@ -104,15 +106,23 @@ const Signup = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                 required
               />
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Password"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                required
-              />
+              <div className="relative">
+                <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Password"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm pr-10"
+                    required
+                />
+                <span
+                    className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                    onClick={() => setShowPassword(!showPassword)}
+                    >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+               </div>
               <button
                 type="submit"
                 className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium"
@@ -126,18 +136,8 @@ const Signup = () => {
             )}
 
             <div className="text-center mt-5">
-              <p className="text-sm text-gray-500 mb-2">Or sign up with</p>
-              <button
-                onClick={handleGoogleSignIn}
-                className="w-full flex items-center justify-center gap-3 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition text-sm"
-              >
-                <img
-                  src="https://www.svgrepo.com/show/475656/google-color.svg"
-                  alt="Google"
-                  className="w-5 h-5"
-                />
-                Sign up with Google
-              </button>
+              <p className="text-sm text-gray-500 mb-2"></p>
+
             </div>
 
             <p className="text-center text-sm text-gray-500 mt-6">

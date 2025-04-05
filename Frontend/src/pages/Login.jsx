@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,13 +19,11 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", formData);
-      
       const { token, user } = res.data;
-  
-      // Save to localStorage (you can also use sessionStorage)
+
       localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user)); // optional, if you send user data
-      
+      localStorage.setItem("user", JSON.stringify(user));
+
       toast.success("Login Successful!", {
         position: "top-right",
         autoClose: 3000,
@@ -32,29 +32,23 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
         style: {
-          backgroundColor: "#3B82F6",
-          color: "#ffffff",
+          backgroundColor: "#ffffff",
+          color: "#3B82F6",
           fontWeight: "bold",
         },
       });
-  
+
       setTimeout(() => navigate("/Dashboard"), 1500);
     } catch (err) {
       const msg = err.response?.data?.message || "Login failed";
       setError(msg);
     }
   };
-  
-
-  const handleGoogleSignIn = () => {
-    console.log("Google Sign-In clicked");
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-blue-50 px-4 py-10">
       <ToastContainer />
 
-      {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
         className="fixed top-4 left-4 border-2 border-blue-600 text-blue-600 hover:bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center shadow-sm transition z-10 md:absolute"
@@ -72,21 +66,21 @@ const Login = () => {
         </svg>
       </button>
 
-      {/* Main Card */}
-      <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 grid grid-cols-1 md:grid-cols-2">
-        {/* Left Side */}
+      {/* Card container - adjusted height */}
+      <div className="w-full max-w-4xl h-[500px] bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 grid grid-cols-1 md:grid-cols-2">
+        {/* Left Panel */}
         <div className="hidden md:flex flex-col justify-center items-center bg-gradient-to-br from-blue-800 via-blue-600 to-blue-400 text-white p-8 md:p-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Welcome Back 👋</h2>
           <p className="text-base md:text-lg text-center max-w-sm">
-            Join the mission to make roads safer. Login and take control of your road safety journey with Team Saarthi.
+            Join the mission to make roads safer. Login and take control of your road safety journey with Auralytics.
           </p>
         </div>
 
-        {/* Right Side */}
+        {/* Right Panel (Form) */}
         <div className="flex items-center justify-center p-6 sm:p-10 bg-gray-50">
           <div className="w-full bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-gray-100">
             <h2 className="text-2xl sm:text-3xl font-bold text-blue-600 text-center mb-6">
-              Login to Team Saarthi
+              Login to Auralytics
             </h2>
 
             <form className="space-y-4" onSubmit={handleSubmit}>
@@ -99,15 +93,25 @@ const Login = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                 required
               />
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Password"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                required
-              />
+
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm pr-10"
+                  required
+                />
+                <span
+                  className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+
               <button
                 type="submit"
                 className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium"
@@ -119,21 +123,6 @@ const Login = () => {
             {error && (
               <p className="text-red-500 text-sm text-center mt-2">{error}</p>
             )}
-
-            <div className="text-center mt-5">
-              <p className="text-sm text-gray-500 mb-2">Or sign in with</p>
-              <button
-                onClick={handleGoogleSignIn}
-                className="w-full flex items-center justify-center gap-3 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition text-sm"
-              >
-                <img
-                  src="https://www.svgrepo.com/show/475656/google-color.svg"
-                  alt="Google"
-                  className="w-5 h-5"
-                />
-                Sign in with Google
-              </button>
-            </div>
 
             <p className="text-center text-sm text-gray-500 mt-6">
               Don’t have an account?{" "}
