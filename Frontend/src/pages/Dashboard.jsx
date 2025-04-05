@@ -3,10 +3,48 @@ import { MdDashboard } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { NavLink, Routes, Route, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+  
+    if (!token) {
+      toast.warn("Please login first.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        style: {
+          backgroundColor: "#fef3c7",
+          color: "#92400e",
+          fontWeight: "bold",
+        },
+      });
+      navigate("/");
+    } else {
+      const fetchUser = async () => {
+        try {
+          const token = localStorage.getItem("token");
+          const { data } = await axios.get("http://localhost:5000/api/user", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });          
+          console.log("Fetched user data:", data); // debug this
+          setUser(data.user); // or setUser(data) based on the response
+        } catch (error) {
+          console.error("Failed to fetch user:", error);
+        }
+      };
+  
+      fetchUser();
+    }
+  }, [navigate]);   
+
 
 
   useEffect(() => {
@@ -98,8 +136,7 @@ export default function Dashboard() {
                   end={path === "/dashboard"}
                   onClick={() => setSidebarOpen(false)}
                   className={({ isActive }) =>
-                    `flex items-center gap-2 px-4 py-2 rounded transition ${
-                      isActive ? "bg-blue-600 font-semibold" : "hover:bg-blue-600"
+                    `flex items-center gap-2 px-4 py-2 rounded transition ${isActive ? "bg-blue-600 font-semibold" : "hover:bg-blue-600"
                     }`
                   }
                 >
@@ -110,15 +147,17 @@ export default function Dashboard() {
             </nav>
 
             {/* User Info */}
-            <div className="mt-6 pt-6 border-t border-blue-600 flex items-center gap-3">
-              <div className="bg-white text-blue-700 rounded-full p-2">
-                <FaUser />
+            {user && (
+              <div className="mt-6 pt-6 border-t border-blue-600 flex items-center gap-3">
+                <div className="bg-white text-blue-700 rounded-full p-2">
+                  <FaUser />
+                </div>
+                <div>
+                  <p className="font-semibold">{user.fullName}</p>
+                  <p className="text-sm text-gray-300">{user.email}</p>
+                </div>
               </div>
-              <div>
-                <p className="font-semibold">Essam Mohamed</p>
-                <p className="text-sm text-gray-300">Essam@example.com</p>
-              </div>
-            </div>
+            )}
           </div>
         </aside>
 
