@@ -588,7 +588,7 @@ logging.basicConfig(
 logger = logging.getLogger("anomaly_pipeline")
 
 # Configure Gemini API
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyChEDlxhCiE0GCl0p8S4e-TZ2JHfe-iC-I")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 genai.configure(api_key=GEMINI_API_KEY)
 
 # Load model
