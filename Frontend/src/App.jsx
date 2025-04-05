@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -22,31 +22,20 @@ const Layout = ({ children }) => {
 };
 
 function App() {
-  const location = window.location.pathname;
-  const isAuthPage = location === "/login" || location === "/signup";
-
   return (
     <Router>
       <Routes>
         {/* Auth pages (no Navbar or Footer) */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/Dashboard/*" element={<Dashboard />} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
 
-        {/* Pages with Layout (Navbar + Footer) */}
+        {/* Pages with Layout */}
         <Route
           path="/"
           element={
             <Layout>
               <Home />
-            </Layout>
-          }
-        />
-        <Route
-          path="/NotFound"
-          element={
-            <Layout>
-              <NotFound />
             </Layout>
           }
         />
@@ -63,6 +52,16 @@ function App() {
           element={
             <Layout>
               <Contact />
+            </Layout>
+          }
+        />
+
+        {/* Catch-all route for 404 */}
+        <Route
+          path="*"
+          element={
+            <Layout>
+              <NotFound />
             </Layout>
           }
         />
