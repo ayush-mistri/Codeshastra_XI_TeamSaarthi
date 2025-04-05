@@ -14,7 +14,7 @@ const Signup = () => {
             {/* Back Button */}
             <button
                 onClick={() => navigate(-1)}
-                className="absolute top-4 left-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-md transition z-10"
+                className="absolute top-4 left-4 border-2 border-blue-600 text-blue-600 hover:bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center shadow-sm transition z-10"
                 title="Go back"
             >
                 <svg
