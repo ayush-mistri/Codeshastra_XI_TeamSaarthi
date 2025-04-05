@@ -38,7 +38,7 @@ const Login = () => {
         },
       });
   
-      setTimeout(() => navigate("/Dashboard"), 1500);
+      setTimeout(() => navigate("/Dashboard/Upload"), 1500);
     } catch (err) {
       const msg = err.response?.data?.message || "Login failed";
       setError(msg);
