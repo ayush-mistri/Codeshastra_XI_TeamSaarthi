@@ -3,7 +3,7 @@ import { FaChartLine } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-tl from-blue-700 to-blue-300 text-white pt-12 pb-6">
+    <footer className="bg-gradient-to-tl from-blue-800 to-blue-300 text-white pt-12 pb-6">
       <div className="max-w-7xl mx-auto px-4">
         {/* Top Footer */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 border-b border-blue-100 pb-10">

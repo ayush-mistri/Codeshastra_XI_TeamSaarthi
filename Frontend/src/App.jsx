@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
-import Dashboard from "./components/Dashboard/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/404";
 import Signup from "./pages/Signup";
 
@@ -31,7 +31,7 @@ function App() {
         {/* Auth pages (no Navbar or Footer) */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Dashboard/*" element={<Dashboard />} />
 
         {/* Pages with Layout (Navbar + Footer) */}
         <Route
