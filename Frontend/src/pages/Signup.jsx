@@ -1,16 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        password: "",
+    });
+
+    const [error, setError] = useState("");
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post("http://localhost:5000/api/auth/signup", formData);
+            console.log("Signup successful:", res.data);
+            toast.success("Signup Successful!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                style: {
+                    backgroundColor: "#3B82F6",
+                    color: "#ffffff",
+                    fontWeight: "bold",
+                },
+            });
+            setTimeout(() => navigate("/login"), 1500);
+        } catch (err) {
+            const msg = err.response?.data?.message || "Signup failed";
+            setError(msg);
+        }
+    };
 
     const handleGoogleSignIn = () => {
-        // Add your Google Sign-Up logic here (Firebase/Auth0/etc.)
         console.log("Google Sign-Up clicked");
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-blue-50 p-4">
+            <ToastContainer />
             {/* Back Button */}
             <button
                 onClick={() => navigate(-1)}
@@ -43,21 +83,33 @@ const Signup = () => {
                 <div className="flex items-center justify-center p-10 bg-gray-50">
                     <div className="w-full bg-white rounded-2xl shadow-md p-8 border border-gray-100">
                         <h2 className="text-3xl font-bold text-blue-600 text-center mb-6">Create Account</h2>
-                        <form className="space-y-4">
+                        <form className="space-y-4" onSubmit={handleSubmit}>
                             <input
                                 type="text"
+                                name="fullName"
+                                value={formData.fullName}
+                                onChange={handleChange}
                                 placeholder="Full Name"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                required
                             />
                             <input
                                 type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
                                 placeholder="Email"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                required
                             />
                             <input
                                 type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
                                 placeholder="Password"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                required
                             />
                             <button
                                 type="submit"
@@ -66,6 +118,10 @@ const Signup = () => {
                                 Sign Up
                             </button>
                         </form>
+
+                        {error && (
+                            <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+                        )}
 
                         <div className="text-center mt-4">
                             <p className="text-sm text-gray-500 mb-2">Or sign up with</p>
