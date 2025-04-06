@@ -8,6 +8,7 @@ import { MdCloudUpload } from "react-icons/md";
 import { AiOutlineAreaChart } from "react-icons/ai";
 import { BiErrorAlt } from "react-icons/bi";
 import { jsPDF } from "jspdf";
+import "jspdf-autotable"; // Import the autotable plugin for jsPDF
 
 // Shared data storage object
 const reportData = {
@@ -406,17 +407,26 @@ function DashboardHome() {
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0]; // Ensure that a file is selected
-
+  
     if (!file) {
       console.error("No file selected.");
       toast.error("No file selected. Please choose a file to upload.");
       return; // Early return if no file is selected
     }
-
+  
+    const fileExtension = file.name.split(".").pop().toLowerCase();
+  
+    // Check if the file extension is either .csv or .xlsx
+    if (fileExtension !== "csv" && fileExtension !== "xlsx") {
+      toast.error("Wrong format. Please upload a .csv or .xlsx file.");
+      setMessage("Wrong format. Please upload a .csv or .xlsx file.");
+      return; // Early return if the file format is incorrect
+    }
+  
     // Create a FormData object to send the file
     const formData = new FormData();
     formData.append("file", file);
-
+  
     try {
       // Send the file to the backend
       const response = await axios.post("http://localhost:5001/upload", formData, {
@@ -445,7 +455,7 @@ function DashboardHome() {
       toast.error(errorMessage);
       setMessage(errorMessage); // Set the error message if upload fails
     }
-  };
+  };  
 
   const triggerFileInput = () => {
     fileInputRef.current.click();
@@ -483,10 +493,12 @@ function DashboardHome() {
   );
 }
 
+
 function AnomalyPage() {
   const [anomalyData, setAnomalyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [reportData, setReportData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -499,13 +511,12 @@ function AnomalyPage() {
         });
         const anomaly = data.anomalies[0];
         const analytics = data.anomalies[0]?.anomalies || [];
-        
+
         setAnomalyData(anomaly);
-        reportData.anomaly = anomaly;
-        reportData.analytics = analytics;
-        
-        console.log("Anomaly data stored:", reportData.anomaly);
-        console.log("Analytics data stored from AnomalyPage:", reportData.analytics);
+        setReportData({ anomaly, analytics });
+
+        console.log("Anomaly data stored:", anomaly);
+        console.log("Analytics data stored:", analytics);
         setLoading(false);
       } catch (err) {
         setError("Failed to load anomalies.");
@@ -531,15 +542,15 @@ function AnomalyPage() {
           </p>
           <p className="text-sm mt-1 italic text-gray-600">{anomalyData.metadata?.recommendation || "No recommendation"}</p>
         </div>
-        <button
+        {/* <button
           className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
           onClick={() => {
             console.log("Download button clicked, reportData:", reportData);
-            DownloadReport(reportData);
+            DownloadReport(reportData); // Call the DownloadReport function when clicked
           }}
         >
           Download Report
-        </button>
+        </button> */}
       </div>
 
       <div className="overflow-auto rounded-lg shadow-xl ring-1 ring-gray-200">
@@ -582,166 +593,41 @@ function AnomalyPage() {
   );
 }
 
-function DownloadReport(data) {
-  console.log("DownloadReport called with data:", data);
 
-  try {
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 10;
-    let yPosition = margin;
+// const DownloadReport = (reportData) => {
+//   const doc = new jsPDF();
 
-    // Header
-    doc.setFontSize(22);
-    doc.setTextColor(29, 78, 216); // Blue-700
-    doc.text("Auralytics Report", margin, yPosition);
-    yPosition += 15;
+//   // Set up the title of the document
+//   doc.setFontSize(18);
+//   doc.text("Anomaly Detection Report", 14, 20);
+  
+//   // Prepare the table data for PDF
+//   const tableData = reportData.anomalies.map((anomaly) => [
+//     anomaly.column || "Not Specified",
+//     anomaly.type === "LSTM" ? "AI Detected" : anomaly.type,
+//     anomaly.count || 1,
+//     anomaly.severity > 60 ? "High" : anomaly.severity > 40 ? "Medium" : "Low",
+//     anomaly.explanation || "No explanation provided",
+//   ]);
 
-    // Anomaly Section
-    if (data.anomaly) {
-      doc.setFontSize(16);
-      doc.text("Anomaly Detection", margin, yPosition);
-      yPosition += 10;
+//   // Column headers for the table
+//   const headers = ["Column", "Type", "Count", "Severity", "Explanation"];
+  
+//   // Create the table in the PDF
+//   doc.autoTable({
+//     head: [headers],
+//     body: tableData,
+//     startY: 30, // Starting Y position after the title
+//     margin: { horizontal: 10 },
+//     styles: { fontSize: 10 },
+//     columnStyles: {
+//       4: { cellWidth: "auto", halign: "left" },
+//     },
+//   });
 
-      doc.setFontSize(12);
-      doc.setTextColor(55, 65, 81); // Gray-700
-      doc.text(`Total Anomalies: ${data.anomaly.metadata?.total_anomalies || "N/A"}`, margin, yPosition);
-      yPosition += 7;
-      doc.setFontSize(10);
-      doc.setTextColor(75, 85, 99); // Gray-600
-      doc.text(data.anomaly.metadata?.recommendation || "No recommendation available", margin, yPosition, { maxWidth: pageWidth - 2 * margin });
-      yPosition += 15;
-
-      // Anomaly Table Header
-      doc.setFillColor(37, 99, 235); // Blue-600
-      doc.rect(margin, yPosition, pageWidth - 2 * margin, 8, "F");
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(10);
-      doc.text("Column", margin + 2, yPosition + 6);
-      doc.text("Type", margin + 40, yPosition + 6);
-      doc.text("Count", margin + 80, yPosition + 6);
-      doc.text("Severity", margin + 100, yPosition + 6);
-      doc.text("Explanation", margin + 130, yPosition + 6);
-      yPosition += 8;
-
-      // Anomaly Table Rows
-      doc.setFontSize(10);
-      if (data.anomaly.anomalies && Array.isArray(data.anomaly.anomalies)) {
-        data.anomaly.anomalies.forEach((anomaly, index) => {
-          if (yPosition > doc.internal.pageSize.getHeight() - 20) {
-            doc.addPage();
-            yPosition = margin;
-          }
-
-          doc.setTextColor(31, 41, 55); // Gray-800
-          const bgColor = index % 2 === 0 ? [243, 244, 246] : [255, 255, 255];
-          doc.setFillColor(...bgColor);
-          doc.rect(margin, yPosition, pageWidth - 2 * margin, 10, "F");
-
-          doc.text(String(anomaly.column || "Not Specified"), margin + 2, yPosition + 7);
-          doc.text(anomaly.type === "LSTM" ? "AI Detected" : String(anomaly.type || "Unknown"), margin + 40, yPosition + 7);
-          doc.text(String(anomaly.count || 1), margin + 80, yPosition + 7);
-
-          const severityText = anomaly.severity > 60 ? "High" : anomaly.severity > 40 ? "Medium" : "Low";
-          doc.setTextColor(anomaly.severity > 60 ? [220, 38, 38] : anomaly.severity > 40 ? [202, 138, 4] : [22, 163, 74]);
-          doc.text(severityText, margin + 100, yPosition + 7);
-
-          doc.setTextColor(75, 85, 99); // Gray-600
-          doc.text(String(anomaly.explanation || "No explanation"), margin + 130, yPosition + 7, { maxWidth: 60 });
-          yPosition += 10;
-        });
-      } else {
-        doc.setTextColor(31, 41, 55);
-        doc.text("No anomaly data available", margin, yPosition);
-        yPosition += 10;
-      }
-      yPosition += 15;
-    } else {
-      doc.setFontSize(16);
-      doc.setTextColor(29, 78, 216);
-      doc.text("Anomaly Detection", margin, yPosition);
-      yPosition += 10;
-      doc.setFontSize(12);
-      doc.setTextColor(55, 65, 81);
-      doc.text("No anomaly data available", margin, yPosition);
-      yPosition += 15;
-    }
-
-    // Analytics Section
-    if (data.analytics && Array.isArray(data.analytics)) {
-      if (yPosition > doc.internal.pageSize.getHeight() - 40) {
-        doc.addPage();
-        yPosition = margin;
-      }
-
-      doc.setFontSize(16);
-      doc.setTextColor(29, 78, 216); // Blue-700
-      doc.text("Analytics Summary", margin, yPosition);
-      yPosition += 10;
-
-      const anomalyTypeMap = {};
-      data.analytics.forEach((anomaly) => {
-        const type = anomaly.type || "Unknown";
-        anomalyTypeMap[type] = (anomalyTypeMap[type] || 0) + 1;
-      });
-
-      doc.setFontSize(12);
-      doc.setTextColor(31, 41, 55); // Gray-800
-      doc.text("Anomaly Type Distribution", margin, yPosition);
-      yPosition += 7;
-
-      doc.setFontSize(10);
-      Object.entries(anomalyTypeMap).forEach(([type, count]) => {
-        doc.text(`${type}: ${count}`, margin + 5, yPosition);
-        yPosition += 6;
-      });
-      yPosition += 10;
-
-      const severityDistribution = data.analytics.reduce((acc, curr) => {
-        const bucket = Math.floor(curr.severity / 10) * 10;
-        acc[bucket] = (acc[bucket] || 0) + 1;
-        return acc;
-      }, {});
-
-      doc.setFontSize(12);
-      doc.text("Severity Distribution", margin, yPosition);
-      yPosition += 7;
-
-      doc.setFontSize(10);
-      Object.entries(severityDistribution).forEach(([severity, freq]) => {
-        doc.text(`${severity}-${parseInt(severity) + 9}: ${freq}`, margin + 5, yPosition);
-        yPosition += 6;
-      });
-    } else {
-      if (yPosition > doc.internal.pageSize.getHeight() - 40) {
-        doc.addPage();
-        yPosition = margin;
-      }
-      doc.setFontSize(16);
-      doc.setTextColor(29, 78, 216);
-      doc.text("Analytics Summary", margin, yPosition);
-      yPosition += 10;
-      doc.setFontSize(12);
-      doc.setTextColor(55, 65, 81);
-      doc.text("No analytics data available", margin, yPosition);
-      yPosition += 15;
-    }
-
-    // Footer
-    doc.setFontSize(8);
-    doc.setTextColor(107, 114, 128); // Gray-500
-    doc.text(`Generated on: ${new Date().toLocaleString()}`, margin, doc.internal.pageSize.getHeight() - margin);
-
-    console.log("PDF generation completed, saving...");
-    doc.save("Auralytics_Report.pdf");
-  } catch (error) {
-    console.error("Error generating PDF:", error);
-    toast.error("Failed to generate report. Please try again.", {
-      position: "top-right",
-      autoClose: 3000,
-    });
-  }
-}
+//   // Save the document
+//   doc.save("Anomaly_Report.pdf");
+// };
 
 function StatCard({ title, value, change, isNegative }) {
   return (
