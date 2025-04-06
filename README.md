@@ -34,10 +34,6 @@ AURALYTIX addresses this challenge by developing an AI-powered Retrieval-Augment
 - **ML/AI**: Python, LangChain, HuggingFace Transformers, scikit-learn
 - **RAG Implementation**: LangChain, FAISS/Chroma vector stores, OpenAI embeddings
 
-  ```bash
-git clone https://github.com/TeamSaarthi/AURALYTIX.git
-```
-
 ## Project Workflow
 ![diagram-export-4-6-2025-7_45_53-AM](https://github.com/user-attachments/assets/824fcac0-ec03-40ed-b551-b51d9f9a7241)
 
