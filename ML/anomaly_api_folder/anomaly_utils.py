@@ -14,7 +14,6 @@ def load_data(file_path):
     df = pd.read_csv(file_path, low_memory=False)
     print(f"Data loaded successfully from {file_path}. Shape: {df.shape}")
     return df
-
 def validate_schema(df, schema):
     """Validate data against schema constraints."""
     anomalies = []
@@ -267,8 +266,10 @@ def rag_explain_anomalies(anomalies, schema, df):
     return anomalies
 
 # JSON Report Generation Function
-def generate_json_report(anomalies, output_path="anomaly_report.json"):
+def generate_json_report(anomalies, output_path="output/anomaly_report.json"):
     """Generate a JSON report of all anomalies."""
+    # Ensure output directory exists
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     # Prepare summary data
     total_anomalies = len(anomalies)
     type_counts = pd.Series([anom.get('type', 'Unknown') for anom in anomalies]).value_counts().to_dict()
@@ -293,6 +294,9 @@ def generate_json_report(anomalies, output_path="anomaly_report.json"):
     with open(output_path, 'w') as f:
         json.dump(report, f, indent=4)
     print(f"JSON report generated and saved to {output_path}")
+    
+    
+    
 
 # Main Processing Function
 def process_data(file_path, schema_path):
@@ -314,9 +318,15 @@ def process_data(file_path, schema_path):
     print(f"Process completed. Total anomalies detected and reported: {len(explained_anoms)}")
     return explained_anoms
 
+import sys
+
 if __name__ == "__main__":
     try:
-        anomalies = process_data("../Hackathon_Dataset.csv", "../Schema.json")
+        if len(sys.argv) != 3:
+            raise ValueError("Usage: python anomaly_utils.py <file_path> <schema_path>")
+        file_path = sys.argv[1]
+        schema_path = sys.argv[2]
+        anomalies = process_data(file_path, schema_path)
         print("Execution completed successfully.")
     except Exception as e:
         print(f"Error in main execution: {e}")

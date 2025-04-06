@@ -354,8 +354,7 @@ function AnalyticsPage() {
 import * as XLSX from "xlsx";
 
 function DashboardHome() {
-  const [message, setMessage] = useState("");
-  const [recentFiles, setRecentFiles] = useState([]);
+  const [message, setMessage] = useState(""); // Store success or error messages
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -373,18 +372,13 @@ function DashboardHome() {
         const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
         console.log("Parsed Data:", jsonData);
-        setMessage("File uploaded and parsed successfully!");
+        // setMessage("File uploaded and parsed successfully!");
 
         const newFile = {
           name: file.name,
           size: `${(file.size / 1024).toFixed(2)} KB`,
           date: new Date().toLocaleString(),
         };
-
-        setRecentFiles((prev) => {
-          const updated = [newFile, ...prev];
-          return updated.slice(0, 5);
-        });
       };
 
       reader.readAsArrayBuffer(file);
@@ -410,9 +404,46 @@ function DashboardHome() {
     setDragOver(false);
   };
 
-  const handleFileUpload = (e) => {
-    if (e.target.files.length > 0) {
-      handleFile(e.target.files[0]);
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0]; // Ensure that a file is selected
+
+    if (!file) {
+      console.error("No file selected.");
+      toast.error("No file selected. Please choose a file to upload.");
+      return; // Early return if no file is selected
+    }
+
+    // Create a FormData object to send the file
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      // Send the file to the backend
+      const response = await axios.post("http://localhost:5001/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Ensure correct content type for file upload
+        },
+      });
+      toast.success("File Uploaded Successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        style: {
+          backgroundColor: "#ffffff",
+          color: "#3B82F6",
+          fontWeight: "bold",
+        },
+      });
+      setMessage("File uploaded successfully!"); // Update the message after a successful upload
+      console.log("File uploaded successfully:", response.data);
+    } catch (error) {
+      console.error("Error uploading file:", error.response ? error.response.data : error.message);
+      const errorMessage = error.response?.data?.error || "An error occurred while uploading the file.";
+      toast.error(errorMessage);
+      setMessage(errorMessage); // Set the error message if upload fails
     }
   };
 
@@ -448,32 +479,6 @@ function DashboardHome() {
         </div>
         {message && <p className="text-sm text-blue-600 mt-4 text-center">{message}</p>}
       </div>
-
-      {recentFiles.length > 0 && (
-        <div className="w-full max-w-4xl mt-8 bg-white border rounded-lg shadow overflow-x-auto">
-          <h3 className="text-lg font-semibold text-gray-800 px-4 py-3 border-b">Recent Uploads</h3>
-          <table className="min-w-full text-sm text-left text-gray-700">
-            <thead className="bg-gray-100 Китая
-
-text-gray-600 uppercase text-xs">
-              <tr>
-                <th className="px-4 py-2">File Name</th>
-                <th className="px-4 py-2">Size</th>
-                <th className="px-4 py-2">Uploaded At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentFiles.map((file, index) => (
-                <tr key={index} className="border-t">
-                  <td className="px-4 py-2 truncate max-w-xs">{file.name}</td>
-                  <td className="px-4 py-2">{file.size}</td>
-                  <td className="px-4 py-2">{file.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
     </div>
   );
 }

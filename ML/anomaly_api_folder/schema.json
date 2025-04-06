@@ -1,0 +1,1136 @@
+[
+  {
+    "name": "Date",
+    "mode": "",
+    "type": "DATE",
+    "description": "Adjusted sale date based on the restaurant's closing hour (02:30 AM). Sales made after midnight but before closing are recorded under the previous day's date.",
+    "fields": []
+  },
+  {
+    "name": "Timestamp",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "Exact date and time of the invoice generation without adjustments.",
+    "fields": []
+  },
+  {
+    "name": "Invoice_No_",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the invoice on which an item is sold. Since this is an item-level report, invoice numbers repeat for each item in a sale. Additionally, invoice numbers are reused over time by the POS system, so they are not unique.",
+    "fields": []
+  },
+  {
+    "name": "Payment_Type",
+    "mode": "",
+    "type": "STRING",
+    "description": "Indicates the method of payment used for a sale. It includes options like Cash, Online, Card, and various third-party payment methods (e.g., Paytm, Zomato Pay, UPI, AMEX). It also includes partial and due payments.",
+    "fields": []
+  },
+  {
+    "name": "Order_Type",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies how the order was placed-Dine In (eaten at the restaurant), Delivery (Parcel sent to the customer), or Pick Up (customer collects the order).",
+    "fields": []
+  },
+  {
+    "name": "Area",
+    "mode": "",
+    "type": "STRING",
+    "description": "Indicates where the order was taken or processed. It includes on-premise locations (e.g., Garden Table, BAR Table, Personal Dine-In Room), third-party platforms (e.g., Zomato, Swiggy), and fulfillment methods (e.g., Parcel, Home Delivery, Room Service, Party).",
+    "fields": []
+  },
+  {
+    "name": "Item_Name",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the name of the dish or item sold in the order.",
+    "fields": []
+  },
+  {
+    "name": "Price",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the base price of the dish or item sold in the order.",
+    "fields": []
+  },
+  {
+    "name": "Qty_",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the number of units of a dish or item sold in the order.",
+    "fields": []
+  },
+  {
+    "name": "Sub_Total",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Calculated as Quantity x Base Price for a specific item in an order, before discounts and taxes.",
+    "fields": []
+  },
+  {
+    "name": "Discount",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the discount applied to an item in a specific order.",
+    "fields": []
+  },
+  {
+    "name": "Tax",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the total tax applied to an item, including SGST, CGST, VAT, and Service Charge.",
+    "fields": []
+  },
+  {
+    "name": "Final_Total",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the item's total price after applying all taxes and discounts.",
+    "fields": []
+  },
+  {
+    "name": "Status",
+    "mode": "",
+    "type": "STRING",
+    "description": "Indicates the order's outcome-Success (completed sale), Complimentary (given for free), or Cancelled (order voided).",
+    "fields": []
+  },
+  {
+    "name": "Table_No_",
+    "mode": "",
+    "type": "STRING",
+    "description": "Identifies the designated table at the restaurant where the item was served.",
+    "fields": []
+  },
+  {
+    "name": "Server_Name",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the name of the staff member whose login credentials were used to process the order.",
+    "fields": []
+  },
+  {
+    "name": "Covers",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the number of guests (PAX) at a table for a given invoice. Since this is an item-level report, the PAX value repeats for each item in the same invoice.",
+    "fields": []
+  },
+  {
+    "name": "Variation",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Category",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the menu category to which an item belongs.",
+    "fields": []
+  },
+  {
+    "name": "HSN",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Phone",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the guest's phone number linked to a specific invoice ID for that day.",
+    "fields": []
+  },
+  {
+    "name": "Name",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the guest's name associated with a specific invoice ID for that day.",
+    "fields": []
+  },
+  {
+    "name": "Address",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the guest's address associated with a specific invoice ID for that day.",
+    "fields": []
+  },
+  {
+    "name": "GST",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the GST number associated with the guest's business.",
+    "fields": []
+  },
+  {
+    "name": "Assign_To",
+    "mode": "",
+    "type": "STRING",
+    "description": "Indicates the captain responsible for receiving and managing the order.",
+    "fields": []
+  },
+  {
+    "name": "Non_Taxable",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "CGST_Rate",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Specifies the percentage of Central Goods and Services Tax (CGST) applied to the item.",
+    "fields": []
+  },
+  {
+    "name": "CGST_Amount",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Specifies the amount of Central Goods and Services Tax (CGST) applied to the item.",
+    "fields": []
+  },
+  {
+    "name": "SGST_Rate",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Specifies the percentage of State Goods and Services Tax (SGST) applied to the item.",
+    "fields": []
+  },
+  {
+    "name": "SGST_Amount",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Specifies the amount of State Goods and Services Tax (SGST) applied to the item.",
+    "fields": []
+  },
+  {
+    "name": "VAT_Rate",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Specifies the percentage of Value Added Tax (VAT) applied to the item.",
+    "fields": []
+  },
+  {
+    "name": "VAT_Amount",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Specifies the amount of Value Added Tax (VAT) applied to the item.",
+    "fields": []
+  },
+  {
+    "name": "Service_Charge_Rate",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Specifies the percentage of Service Charge applied to the item.",
+    "fields": []
+  },
+  {
+    "name": "Service_Charge_Amount",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Specifies the amount of Service Charge applied to the item.",
+    "fields": []
+  },
+  {
+    "name": "Date_z",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "Represents the date and timestamp when the order was received from Zomato, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Invoice_Date_z",
+    "mode": "",
+    "type": "DATE",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Aggregator_Order_No_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the order number from the Zomato report. It is unique per invoice but repeats for each item since this is an item-level report.",
+    "fields": []
+  },
+  {
+    "name": "PoS_Invoice_No_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Contains the same Invoice Number as the Invoice No. field, as recorded in the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Order_From_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the name of the aggregator from which the order was received, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Outlet_Name_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the name of the outlet where the order was received, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Petpooja_Identifier_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Order_Type_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Indicates the type of order from the Zomato report. It only contains 'Delivery', while other entries are null or empty.",
+    "fields": []
+  },
+  {
+    "name": "Customer_Name_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the customer's name as recorded in the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Customer_Phone_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Payment_Type_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the payment method for the order in the Zomato report. It only contains 'Online' or remains null.",
+    "fields": []
+  },
+  {
+    "name": "Delivery_status_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Contains the delivery executive's name and phone number in the format 'Zomato - [Name] ([Phone Number])' if the order is from Zomato; otherwise, it is null.",
+    "fields": []
+  },
+  {
+    "name": "Status_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Indicates the status of the Zomato order, with values such as 'Delivered' or 'Cancelled'.",
+    "fields": []
+  },
+  {
+    "name": "My_amount_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the total invoice amount for a specific invoice on that day. Since this is an item-level report, the value repeats for each item in the same invoice.",
+    "fields": []
+  },
+  {
+    "name": "Aggregator_Discount_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the discount applied to the order as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Outlet_Discount_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the discount provided by the outlet, as recorded in the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Delivery_Charges_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Container_Charges_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "CGST_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "SGST_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "IGST_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Total_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the total invoice amount for a specific invoice on that day, generally matching My_Amount_z in most cases.",
+    "fields": []
+  },
+  {
+    "name": "Order_Acceptance_Time_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Order_Delivery_Time_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Reason_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the reason for any order action related to Zomato orders, as recorded in the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Online_Tax_Calculated_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the total tax amount on a Zomato order, as recorded in the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "GST_Paid_by_Merchant_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "GST_Paid_by_Ecommerce_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the total tax amount paid by Zomato for a specific invoice, as recorded in the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Restaurant_ID_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the unique restaurant ID where the Zomato order was received, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Client_Sharing_Code_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Identifier_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Order_ID_z",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Contains the same value as Aggregator_Order_No_z, representing the order number from the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Order_Status_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "Contains the same value as Status_z, indicating the status of the Zomato order.",
+    "fields": []
+  },
+  {
+    "name": "Received_Time_z",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Zomato order was received, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Accepted_Time_z",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Zomato order was accepted, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Mark_Ready_Time_z",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Zomato order was marked ready, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Rider_Arrival_Time_z",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the delivery personnel arrived at the restaurant to pick up the Zomato order, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Picked_up_Time_z",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Zomato order was picked up by the delivery personnel, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Delivered_Time_z",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Zomato order was delivered, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Cancelled_Time_z",
+    "mode": "",
+    "type": "STRING",
+    "description": "The date and timestamp when the Zomato order was canceled, as per the Zomato report.",
+    "fields": []
+  },
+  {
+    "name": "Date_s",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Swiggy order was recorded, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Invoice_Date_s",
+    "mode": "",
+    "type": "DATE",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Aggregator_Order_No_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the order number from the Swiggy report. It is unique per invoice but repeats for each item since this is an item-level report.",
+    "fields": []
+  },
+  {
+    "name": "PoS_Invoice_No_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Contains the same Invoice Number as the Invoice No. field, as recorded in the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Order_From_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the name of the aggregator from which the order was received, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Outlet_Name_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the name of the outlet where the order was received, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Petpooja_Identifier_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Order_Type_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Indicates the type of order from the Swiggy report. It only contains 'Delivery', while other entries are null or empty.",
+    "fields": []
+  },
+  {
+    "name": "Customer_Name_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the customer's name as recorded in the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Customer_Phone_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Payment_Type_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the payment method for the order in the Swiggy report. It only contains 'Online' or remains null.",
+    "fields": []
+  },
+  {
+    "name": "Delivery_status_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Contains the delivery executive's name and phone number in the format 'Swiggy - [Name] ([Phone Number])' if the order is from Swiggy; otherwise, it is null.",
+    "fields": []
+  },
+  {
+    "name": "Status_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Indicates the status of the Swiggy order, with values such as 'Delivered' or 'Cancelled'.",
+    "fields": []
+  },
+  {
+    "name": "My_amount_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the total invoice amount for a specific invoice on that day. Since this is an item-level report, the value repeats for each item in the same invoice.",
+    "fields": []
+  },
+  {
+    "name": "Aggregator_Discount_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the discount applied to the order as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Outlet_Discount_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the discount provided by the outlet, as recorded in the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Delivery_Charges_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Container_Charges_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "CGST_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "SGST_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "IGST_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Total_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the total invoice amount for a specific invoice on that day, generally matching My_Amount_s in most cases.",
+    "fields": []
+  },
+  {
+    "name": "Order_Acceptance_Time_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Order_Delivery_Time_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Reason_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the reason for any order action related to Swiggy orders, as recorded in the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Online_Tax_Calculated_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the total tax amount on a Swiggy order, as recorded in the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "GST_Paid_by_Merchant_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "GST_Paid_by_Ecommerce_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the total tax amount paid by Swiggy for a specific invoice, as recorded in the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Restaurant_ID_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the unique restaurant ID where the Swiggy order was received, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Client_Sharing_Code_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Identifier_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Order_ID_s",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Contains the same value as Aggregator_Order_No_s, representing the order number from the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Order_Status_s",
+    "mode": "",
+    "type": "STRING",
+    "description": "Contains the same value as Status_s, indicating the status of the Swiggy order.",
+    "fields": []
+  },
+  {
+    "name": "Received_Time_s",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Swiggy order was received, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Accepted_Time_s",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Swiggy order was accepted, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Mark_Ready_Time_s",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Swiggy order was marked ready, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Rider_Arrival_Time_s",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the delivery personnel arrived at the restaurant to pick up the Swiggy order, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Picked_up_Time_s",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Swiggy order was picked up by the delivery personnel, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Delivered_Time_s",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Swiggy order was delivered, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Cancelled_Time_s",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the Swiggy order was canceled, as per the Swiggy report.",
+    "fields": []
+  },
+  {
+    "name": "Customer_Name_ff",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Date_of_Birth_ff",
+    "mode": "",
+    "type": "DATE",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Date_of_Anniversary_ff",
+    "mode": "",
+    "type": "DATE",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Customer_Phone_ff",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "From__ff",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Customer_Email_ff",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Invoice_Id_ff",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Table_No_ff",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Order_Type_ff",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Answer_ff",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Created_ff",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Customer_Name_sf",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Date_of_Birth_sf",
+    "mode": "",
+    "type": "DATE",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Date_of_Anniversary_sf",
+    "mode": "",
+    "type": "DATE",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Customer_Phone_sf",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "From__sf",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Customer_Email_sf",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Invoice_Id_sf",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Table_No_sf",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Order_Type_sf",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Answer_sf",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Created_sf",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "PAX",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the number of people for a given invoice. This custom-coded field captures the PAX count only once per order, ensuring no duplication despite item-level reporting.",
+    "fields": []
+  },
+  {
+    "name": "Biller_BSR",
+    "mode": "",
+    "type": "STRING",
+    "description": "The name of the individual logged in while generating the bill, as recorded in the bill settlement report.",
+    "fields": []
+  },
+  {
+    "name": "First_Print_Date_BSR",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the invoice was printed for the first time, as per the bill modification report.",
+    "fields": []
+  },
+  {
+    "name": "Last_Settlement_Date_BSR",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "The date and timestamp when the invoice was last printed after modification, as per the bill modification report.",
+    "fields": []
+  },
+  {
+    "name": "Duration__In_Minutes_BSR",
+    "mode": "",
+    "type": "STRING",
+    "description": "The total time taken to settle the bill for a particular invoice, as per the bill settlement report.",
+    "fields": []
+  },
+  {
+    "name": "Settled_By_BSR",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the name of the biller who settled the bill, as recorded in the bill settlement report.",
+    "fields": []
+  },
+  {
+    "name": "area_co",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the source of the order, such as Zomato, Swiggy, Dine-In, or Personal Dine-In Room, as recorded in the canceled order report.",
+    "fields": []
+  },
+  {
+    "name": "order_cancel_reason_co",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the reason for the cancellation of a particular order, as recorded in the canceled order report.",
+    "fields": []
+  },
+  {
+    "name": "Cancelled_Invoice_Total_co",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the total invoice amount for a canceled order, as recorded in the canceled order report.",
+    "fields": []
+  },
+  {
+    "name": "Change_Log_ORAP",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Discount_Order_Type_DSR",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Biller_Name",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "Discount_DSR",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the type of discount applied to a particular invoice, as recorded in the discount summary report.",
+    "fields": []
+  },
+  {
+    "name": "Reason_DSR",
+    "mode": "",
+    "type": "STRING",
+    "description": "Specifies the reason for the discount applied to a particular invoice, as recorded in the discount summary report.",
+    "fields": []
+  },
+  {
+    "name": "Food_Preparation_Time_Z",
+    "mode": "",
+    "type": "INTEGER",
+    "description": "Represents the total food preparation time for a Zomato order. Since the report is at the item level, this value repeats for all items in the same invoice.",
+    "fields": []
+  },
+  {
+    "name": "Food_Preparation_Time_S",
+    "mode": "",
+    "type": "INTEGER",
+    "description": "Represents the total food preparation time for a Swiggy order. Since the report is at the item level, this value repeats for all items in the same invoice.",
+    "fields": []
+  },
+  {
+    "name": "Zomato_Delivery_Time",
+    "mode": "",
+    "type": "INTEGER",
+    "description": "Represents the total delivery time for a Zomato order. Since the report is at the item level, this value repeats for all items in the same invoice.",
+    "fields": []
+  },
+  {
+    "name": "Swiggy_Delivery_Time",
+    "mode": "",
+    "type": "INTEGER",
+    "description": "Represents the total delivery time for a Swiggy order. Since the report is at the item level, this value repeats for all items in the same invoice.",
+    "fields": []
+  },
+  {
+    "name": "amount_from",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the original invoice amount before any modifications, as recorded in the order report after print modification report.",
+    "fields": []
+  },
+  {
+    "name": "amount_to",
+    "mode": "",
+    "type": "FLOAT",
+    "description": "Represents the invoice amount after modifications, as recorded in the order report after the print modification.",
+    "fields": []
+  },
+  {
+    "name": "modified_by",
+    "mode": "",
+    "type": "STRING",
+    "description": "Represents the name of the cashier who modified the invoice amount, as recorded in the order report after the print modification.",
+    "fields": []
+  },
+  {
+    "name": "modify_comment",
+    "mode": "",
+    "type": "STRING",
+    "description": "Provides the reason for the invoice modification, as recorded in the order report after the print modification.",
+    "fields": []
+  },
+  {
+    "name": "electron_pos",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "Represents the date and timestamp when the invoice was modified, as recorded in the order report after the print modification.",
+    "fields": []
+  },
+  {
+    "name": "bill_no",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "invoice_no",
+    "mode": "",
+    "type": "STRING",
+    "description": "represents the invoice number if it was modified; otherwise, it remains null, as recorded in the order report after the print modification.",
+    "fields": []
+  },
+  {
+    "name": "date_orap",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  }
+]
